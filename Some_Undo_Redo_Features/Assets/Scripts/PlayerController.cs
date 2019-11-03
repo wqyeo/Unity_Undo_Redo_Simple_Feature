@@ -36,6 +36,16 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
+        // In case the object was disabled while dragging around;
+        // (Undo action 'deleted' the object while the cube was being dragged around)
+        if (currentlySelectedCube != null) {
+            if (!currentlySelectedCube.gameObject.activeInHierarchy) {
+                currentlySelectedCube.DeselectCube();
+                currentlySelectedCube = null;
+            }
+        }
+
+
         if (Input.GetKeyDown(DRAG_KEY)) {
             // Cant select another cube if one is currently selected.
             if (currentlySelectedCube == null) {
